@@ -100,11 +100,6 @@ Bu sistem, doktorun ilk bakışta göremeyeceği kadar detaylı analiz ve karş�
 - Fikir aşamasında
 - Analiz ve tasarım süreci planlanmaktadır
 
----
-
-## Lisans
-
-Bu proje MIT Lisansı ile lisanslanacaktır.
 
 ---
 
