@@ -1,13 +1,13 @@
 # [Proje İsmi]
 
-## Takım üyeleri
+## 👥 Takım Üyeleri
 
-| ![Photo](https://avatars.githubusercontent.com/u/0000000?v=4) | **Name**          | **Title**         | **Socials**                                                                                                                                         |
-|:-------------------------------------------------------------:|-------------------|-------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------|
-| ![Photo](https://avatars.githubusercontent.com/gulistankumas) | Gülistan Kumaş    | Scrum Master      | [![GitHub](https://img.shields.io/badge/GitHub-000?logo=github&logoColor=white)](https://github.com/kullanici)|
-| ![Photo](https://avatars.githubusercontent.com/yusufkaan03)   | Yusuf Kaan Çelebi | Developer         | [![GitHub](https://img.shields.io/badge/GitHub-000?logo=github&logoColor=white)](https://github.com/kullanici)|
-| ![Photo](https://avatars.githubusercontent.com/Haticeozken)   | Hatice Özken      | Developer         | [![GitHub](https://img.shields.io/badge/GitHub-000?logo=github&logoColor=white)](https://github.com/kullanici)|
-| ![Photo](https://avatars.githubusercontent.com/YunusEmreCakar)| Yunus Emre Çakar  | Developer         | [![GitHub](https://img.shields.io/badge/GitHub-000?logo=github&logoColor=white)](https://github.com/kullanici)|
+| Fotoğraf | İsim | Görev | GitHub |
+|:--------:|:-----|:------|:-------|
+| <img src="https://avatars.githubusercontent.com/gulistankumas" width="80"/> | Gülistan Kumaş    | Scrum Master      | [![GitHub](https://img.shields.io/badge/GitHub-000?logo=github&logoColor=white)](https://github.com/gulistankumas) |
+| <img src="https://avatars.githubusercontent.com/yusufkaan03" width="80"/>   | Yusuf Kaan Çelebi | Developer         | [![GitHub](https://img.shields.io/badge/GitHub-000?logo=github&logoColor=white)](https://github.com/yusufkaan03) |
+| <img src="https://avatars.githubusercontent.com/Haticeozken" width="80"/>   | Hatice Özken      | Developer         | [![GitHub](https://img.shields.io/badge/GitHub-000?logo=github&logoColor=white)](https://github.com/Haticeozken) |
+| <img src="https://avatars.githubusercontent.com/YunusEmreCakar" width="80"/>| Yunus Emre Çakar  | Developer         | [![GitHub](https://img.shields.io/badge/GitHub-000?logo=github&logoColor=white)](https://github.com/YunusEmreCakar) |
 
 
 ## Proje Açıklaması
