@@ -27,19 +27,21 @@ Bu proje, hastanelerde yapılan kan tahlili sonuçlarının hızlı ve doğru bi
 
 ## Kullanıcı Senaryosu
 
-1. Tahlil sonuçları laboratuvar sisteminden otomatik olarak alınır.
-2. Yapay zekâ motoru:
-   - Mevcut sonuçları geçmiş tahlillerle kıyaslar
-   - Anormal yüksek/düşük değerleri tespit eder
-   - Olası risk faktörlerini belirler
-   - Klinik rapor oluşturur
-3. Doktor muayene sırasında bu raporu görüntüler ve tanıyı koyar.
-4. Doktor sistem üzerinden hastaya özel uyarı ve notları ekler.
-5. Hasta muayene sonrası sistemden:
-   - Doktorun tanısını
-   - İlaç ve doz bilgilerini
-   - Yaşam tarzı önerilerini
-   - Yapay zekâ destekli bilgilendirmeleri alır.
+1.Tahlil Verilerinin Alınması:
+   Tahlil sonuçları laboratuvar sisteminden otomatik olarak alınır.
+2. Yapay Zekâ Analizi:
+   - Mevcut tahlil sonuçları, hastanın geçmiş verileriyle karşılaştırılır.
+   - Anormal yüksek/düşük değerler tespit edilir.
+   - Olası risk faktörleri belirlenir ve klinik bir ön rapor hazırlanır.
+3.Doktor İncelemesi:
+   - Doktor, muayene sırasında sistem üzerinden AI destekli raporu görüntüler.
+   - Tanıyı koyar, tedavi planını oluşturur ve hastaya özel uyarı/notlar ekler.
+5.Hasta Bilgilendirmesi:
+Muayene sonrasında hasta, sistem üzerinden aşağıdaki bilgilere erişir:
+   - Doktorun tanısı
+   - İlaç ve dozaj bilgileri
+   - Yaşam tarzı ve beslenme önerileri 
+   - Yapay zekâ destekli bilgilendirmeler
 
 ---
 
