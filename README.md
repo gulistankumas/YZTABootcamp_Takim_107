@@ -36,7 +36,7 @@ Bu proje, hastanelerde yapılan kan tahlili sonuçlarının hızlı ve doğru bi
    - Olası risk faktörleri belirlenir ve klinik bir ön rapor hazırlanır.
 
 3. **Doktor İncelemesi**  
-   - Doktor, muayene sırasında sistem üzerinden AI destekli raporu görüntüler.  
+   - Doktor, muayene sırasında sistem üzerinden raporu görüntüler.  
    - Tanıyı koyar, tedavi planını oluşturur ve hastaya özel uyarı/notlar ekler.
 
 4. **Hasta Bilgilendirmesi**  
