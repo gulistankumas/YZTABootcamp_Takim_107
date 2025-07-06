@@ -30,7 +30,7 @@ Bu proje, hastanelerde yapılan kan tahlili sonuçlarının hızlı ve doğru bi
 1. **Tahlil Verilerinin Alınması**  
    - Tahlil sonuçları laboratuvar sisteminden otomatik olarak alınır.
 
-2. **Yapay Zekâ Analizi**  
+2. **Yapay Zeka Analizi**  
    - Mevcut tahlil sonuçları, hastanın geçmiş verileriyle karşılaştırılır.  
    - Anormal yüksek/düşük değerler tespit edilir.  
    - Olası risk faktörleri belirlenir ve klinik bir ön rapor hazırlanır.
