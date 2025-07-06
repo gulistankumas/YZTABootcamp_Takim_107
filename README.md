@@ -77,10 +77,10 @@ Bu proje, hastanelerde yapılan kan tahlili sonuçlarının hızlı ve doğru bi
 
 - Python
 - Pandas, NumPy (veri işleme)
-- scikit-learn veya TensorFlow (makine öğrenmesi)
-- Flask veya FastAPI (API servisi)
-- PostgreSQL veya MongoDB (veritabanı)
-- React veya Streamlit (web arayüzü)
+- LLM 
+- FastAPI (API servisi)
+- PostgreSQL  (veritabanı)
+- React (web arayüzü)
 - Docker (deployment)
 
 ---
@@ -97,13 +97,6 @@ Bu proje, hastanelerde yapılan kan tahlili sonuçlarının hızlı ve doğru bi
 ## Projenin Farklılaştırıcı Özellikleri
 
 Bu sistem, doktorun ilk bakışta göremeyeceği kadar detaylı analiz ve karşılaştırmayı otomatik olarak hazırlayarak, muayene öncesi tanı sürecini hızlandırır ve karar kalitesini artırır. Anlamlı bağlantılar kurar, geçmiş verileri bağlamsal olarak yorumlar ve hem doktora hem hastaya kişiselleştirilmiş bilgi sağlar.
-
----
-
-## Proje Durumu
-
-- Fikir aşamasında
-- Analiz ve tasarım süreci planlanmaktadır
 
 
 ---
