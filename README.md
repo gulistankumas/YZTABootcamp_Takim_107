@@ -2,7 +2,7 @@
 
 ## Takım üyeleri
 
-                                                                                                                                      |
+| ![Photo](https://avatars.githubusercontent.com/u/0000000?v=4) | **Name**          | **Title**         | **Socials**                                                                                                                                         |
 |:-------------------------------------------------------------:|-------------------|-------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------|
 | ![Photo](https://avatars.githubusercontent.com/gulistankumas) | Gülistan Kumaş    | Scrum Master      | [![GitHub](https://img.shields.io/badge/GitHub-000?logo=github&logoColor=white)](https://github.com/kullanici)|
 | ![Photo](https://avatars.githubusercontent.com/yusufkaan03)   | Yusuf Kaan Çelebi | Developer         | [![GitHub](https://img.shields.io/badge/GitHub-000?logo=github&logoColor=white)](https://github.com/kullanici)|
