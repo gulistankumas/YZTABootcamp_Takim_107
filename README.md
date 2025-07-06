@@ -1,10 +1,10 @@
-# [Proje İsmi]
+# Tahlil Karar Destek Sistemi
 
 ## 👥 Takım Üyeleri
 
 | Fotoğraf | İsim | Görev | GitHub |
 |:--------:|:-----|:------|:-------|
-| <img src="https://avatars.githubusercontent.com/gulistankumas" width="80"/> | Gülistan Kumaş    | Scrum Master      | [![GitHub](https://img.shields.io/badge/GitHub-000?logo=github&logoColor=white)](https://github.com/gulistankumas) |
+| <img src="https://avatars.githubusercontent.com/gulistankumas" width="80"/> | Gülistan Kumaş    | Scrum Master/Developer      | [![GitHub](https://img.shields.io/badge/GitHub-000?logo=github&logoColor=white)](https://github.com/gulistankumas) |
 | <img src="https://avatars.githubusercontent.com/yusufkaan03" width="80"/>   | Yusuf Kaan Çelebi | Developer         | [![GitHub](https://img.shields.io/badge/GitHub-000?logo=github&logoColor=white)](https://github.com/yusufkaan03) |
 | <img src="https://avatars.githubusercontent.com/Haticeozken" width="80"/>   | Hatice Özken      | Developer         | [![GitHub](https://img.shields.io/badge/GitHub-000?logo=github&logoColor=white)](https://github.com/Haticeozken) |
 | <img src="https://avatars.githubusercontent.com/YunusEmreCakar" width="80"/>| Yunus Emre Çakar  | Developer         | [![GitHub](https://img.shields.io/badge/GitHub-000?logo=github&logoColor=white)](https://github.com/YunusEmreCakar) |
@@ -104,3 +104,27 @@ Bu sistem, doktorun ilk bakışta göremeyeceği kadar detaylı analiz ve karş�
 ## Notlar
 
 Bu sistem, doktor kararlarının yerini almaz. Nihai tanı ve tedavi planı yalnızca sağlık profesyonelleri tarafından belirlenir.
+
+## SPRINT 1
+Sprint içi puan değerlendirmesi 100 olarak belirlenmiştir.
+Puan tamamlama mantığı: Proje boyunca tamamlanması gereken backlog puanı 300'dür. İlk Sprint için bitirilmesi istenilen puan sayısı 100 olarak belirlenmiştir ve hedefe ulaşılmıştır.
+Daily Scrum: Whatsapp üzerinden görüşmeler sağlanmıştır. 
+
+![image](https://github.com/user-attachments/assets/e333b4f9-a990-4437-92b9-4d983bdaa394)
+
+- ## Sprint Review
+   Sprint 1 sonunda, proje fikri,  takım rolleri ve ilk görev dağılımı başarıyla tamamlandı.
+   Ürün konsepti ve hedef kitlesi netleştirildi.
+   Takım üyeleri arasında roller netleştirildi
+
+- ##  Sprint Retrospective
+   Takım içi iletişim kanalları belirlendi (Whatsapp, Trello).
+   
+   Roller arası görev paylaşımı netleştirildi.
+   
+   Tasarımcı ve geliştiricilerin ilk görev dağılımları yapıldı.
+   
+   Gelecek sprintlerde iş birliğini artırmak adına haftalık toplantılar planlandı.
+
+
+
