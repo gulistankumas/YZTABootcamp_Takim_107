@@ -105,26 +105,39 @@ Bu sistem, doktorun ilk bakışta göremeyeceği kadar detaylı analiz ve karş�
 
 Bu sistem, doktor kararlarının yerini almaz. Nihai tanı ve tedavi planı yalnızca sağlık profesyonelleri tarafından belirlenir.
 
-## SPRINT 1
-Sprint içi puan değerlendirmesi 100 olarak belirlenmiştir.
-Puan tamamlama mantığı: Proje boyunca tamamlanması gereken backlog puanı 300'dür. İlk Sprint için bitirilmesi istenilen puan sayısı 100 olarak belirlenmiştir ve hedefe ulaşılmıştır.
-Daily Scrum: Whatsapp üzerinden görüşmeler sağlanmıştır. 
+# SPRINT 1
+## Sprint Notları
+Sprint 1 sürecinde proje ekibi olarak öncelikli hedefimiz proje fikrinin netleştirilmesi, ekip rollerinin belirlenmesi ve temel planlamaların yapılması olmuştur. Bu aşamada geliştirilecek ürünün temel özellikleri, kullanıcı kitlesi ve teknik gereksinimleri üzerine yoğunlaşılmıştır. Takım içi iletişim ve iş birliği süreçleri için gerekli platformlar belirlenmiş ve görev dağılımları yapılmıştır.
+
+## Sprint İçinde Tamamlanması Tahmin Edilen Puan
+Sprint 1 için toplamda tamamlanması planlanan puan miktarı 100 olarak belirlenmiştir. Bu puan, fikir bulma, marka ismi seçimi, takım rollerinin belirlenmesi, proje zaman çizelgesinin çıkarılması ve ilk tasarım kararlarının alınması gibi temel hazırlık görevlerinden oluşmaktadır.
+
+## Puan Tamamlama Mantığı
+Proje genelinde toplam backlog puanı 300 olarak belirlenmiştir. Sprint 1'de bu toplam puanın 100 puanlık kısmının tamamlanması hedeflenmiştir. Sprint sonunda belirlenen görevler başarıyla tamamlanarak hedeflenen puana ulaşılmış ve sprint başarıyla tamamlanmıştır.
+
+## Daily Scrum
+Sprint süresince ekip içi günlük iletişim ve durum değerlendirmeleri WhatsApp üzerinden gerçekleştirilmiştir. Her ekip üyesi ilerleme durumu hakkında bilgilendirme yapmış, karşılaşılan sorunlar anında paylaşılmış ve çözüm yolları hızlıca bulunmuştur. Bu süreçte ekip, iletişimi güçlü tutarak etkin bir iş birliği sergilemiştir.
+<details>
+  <summary> Daily Scrum: Ekran Görüntüleri</summary>
+  ![image](https://github.com/user-attachments/assets/6eaf7d73-19e2-46cb-8449-62aeae1cf992)
+
+
+
+## <details>
+##  <summary>Sprint Board Screenshotları</summary>
+Sprint boyunca yürütülen çalışmalar ve görevlerin durumu Trello üzerinden takip edilmiştir. Backlog, To Do, ve Doing listeleri altında görevler planlanmış ve ilerlemeleri görsel olarak izlenmiştir. Aşağıda Sprint 1'e ait pano görseli yer almaktadır:
 
 ![image](https://github.com/user-attachments/assets/e333b4f9-a990-4437-92b9-4d983bdaa394)
 
-- ## Sprint Review
-   Sprint 1 sonunda, proje fikri,  takım rolleri ve ilk görev dağılımı başarıyla tamamlandı.
-   Ürün konsepti ve hedef kitlesi netleştirildi.
-   Takım üyeleri arasında roller netleştirildi
+## Ürün Durumu: Ekran Görüntüleri
+Sprint 1 sonunda ürünün henüz görsel arayüz geliştirmesi başlamamış olmakla birlikte, proje fikri, marka ismi ve takım yapısına ilişkin kararlar alınmıştır. Bu aşamada proje fikrine uygun ilk logo tasarımları, renk seçimleri ve kullanıcı senaryoları belirlenmiştir. Bu hazırlıklar ilerleyen sprintlerde arayüz çalışmalarına temel oluşturacaktır.
 
-- ##  Sprint Retrospective
-   Takım içi iletişim kanalları belirlendi (Whatsapp, Trello).
-   
-   Roller arası görev paylaşımı netleştirildi.
-   
-   Tasarımcı ve geliştiricilerin ilk görev dağılımları yapıldı.
-   
-   Gelecek sprintlerde iş birliğini artırmak adına haftalık toplantılar planlandı.
+
+## Sprint Review
+Sprint Review toplantısında, proje fikrinin netleştirildiği, takım rollerinin başarıyla belirlendiği ve görev dağılımının tamamlandığı teyit edilmiştir. Ürün geliştirme sürecine başlamadan önce gerekli tüm ön hazırlıklar tamamlanmıştır. Ekip üyeleri sürece aktif katılım göstermiş ve hedeflenen tüm görevler başarıyla sonuçlandırılmıştır.
+
+## Sprint Retrospective
+Sprint Retrospective sürecinde takım içi iletişimin verimli geçtiği ancak bazı görevlerin daha erken aşamada belirlenmesinin faydalı olacağı not edilmiştir. Takım üyeleri, rollerin netleştirilmesinden ve görev paylaşımının dengeli şekilde yapılmasından memnuniyetlerini ifade etmiştir. Gelecek sprintlerde fiziksel veya çevrim içi kısa toplantıların artırılması kararlaştırılmıştır.
 
 
 
