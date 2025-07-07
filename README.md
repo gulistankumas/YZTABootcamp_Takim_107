@@ -117,17 +117,21 @@ Proje genelinde toplam backlog puanı 300 olarak belirlenmiştir. Sprint 1'de bu
 
 ## Daily Scrum
 Sprint süresince ekip içi günlük iletişim ve durum değerlendirmeleri WhatsApp üzerinden gerçekleştirilmiştir. Her ekip üyesi ilerleme durumu hakkında bilgilendirme yapmış, karşılaşılan sorunlar anında paylaşılmış ve çözüm yolları hızlıca bulunmuştur. Bu süreçte ekip, iletişimi güçlü tutarak etkin bir iş birliği sergilemiştir.
+
 <details>
-  <summary> Daily Scrum: Ekran Görüntüleri</summary>
-  ![image](https://github.com/user-attachments/assets/6eaf7d73-19e2-46cb-8449-62aeae1cf992)
+  <summary>Daily Scrum: Ekran Görüntüleri</summary>
+
+  <img src="https://github.com/user-attachments/assets/8bd5db9c-fb3f-4ac1-b14d-66d24e7e4a6b" alt="Daily Scrum Screenshot" width="600"/>
+
+</details>
 
 
-
-## <details>
-##  <summary>Sprint Board Screenshotları</summary>
+## Sprint Board Screenshotları
 Sprint boyunca yürütülen çalışmalar ve görevlerin durumu Trello üzerinden takip edilmiştir. Backlog, To Do, ve Doing listeleri altında görevler planlanmış ve ilerlemeleri görsel olarak izlenmiştir. Aşağıda Sprint 1'e ait pano görseli yer almaktadır:
 
 ![image](https://github.com/user-attachments/assets/e333b4f9-a990-4437-92b9-4d983bdaa394)
+
+
 
 ## Ürün Durumu: Ekran Görüntüleri
 Sprint 1 sonunda ürünün henüz görsel arayüz geliştirmesi başlamamış olmakla birlikte, proje fikri, marka ismi ve takım yapısına ilişkin kararlar alınmıştır. Bu aşamada proje fikrine uygun ilk logo tasarımları, renk seçimleri ve kullanıcı senaryoları belirlenmiştir. Bu hazırlıklar ilerleyen sprintlerde arayüz çalışmalarına temel oluşturacaktır.
