@@ -144,4 +144,61 @@ Sprint Review toplantısında, proje fikrinin netleştirildiği, takım rollerin
 Sprint Retrospective sürecinde takım içi iletişimin verimli geçtiği ancak bazı görevlerin daha erken aşamada belirlenmesinin faydalı olacağı not edilmiştir. Takım üyeleri, rollerin netleştirilmesinden ve görev paylaşımının dengeli şekilde yapılmasından memnuniyetlerini ifade etmiştir. Gelecek sprintlerde fiziksel veya çevrim içi kısa toplantıların artırılması kararlaştırılmıştır.
 
 
+# SPRINT 2
+
+## Sprint Notları
+
+Sprint 2 sürecinde proje ekibi, teknik geliştirmelere odaklanarak sistemin temel bileşenlerini oluşturmuştur. Bu sprintte özellikle veritabanı altyapısının kurulumu, veri işleme modülünün hazırlanması, LLM testlerinin yapılması ve arayüz tasarımına başlanması gibi adımlar başarıyla gerçekleştirilmiştir. Ayrıca RAG sistemi ile anormal değerleri karşılaştırmak üzere kullanılacak veri seti hazırlanmış ve entegrasyon için altyapı kurulmuştur.
+
+## Sprint İçinde Tamamlanması Tahmin Edilen Puan
+
+Sprint 2 için belirlenen hedefler doğrultusunda toplamda 100 puanlık iş planlanmıştır. Bu puan; veritabanı kurulumu, RAG veri setinin hazırlanması, yapay zeka modülünün temel testleri ve frontend başlangıcını kapsamaktadır. Planlanan tüm iş kalemleri başarıyla tamamlanmış ve puan hedefi gerçekleştirilmiştir.
+
+## Puan Tamamlama Mantığı
+
+Sprint 2 için belirlenen işlerin tamamlanmasıyla birlikte 100 puanlık hedefe ulaşılmıştır. Yapılan işler projenin temel yapısının oluşmasını sağlamış ve sonraki sprintler için sağlam bir zemin oluşturmuştur.
+
+## Daily Scrum
+
+Sprint süresince günlük iletişim WhatsApp üzerinden sürdürülmüş ve her ekip üyesi kendi ilerlemesini paylaşmıştır. Teknik engeller, test çıktıları ve arayüzde karşılaşılan sorunlar anlık olarak ekip ile paylaşılmış ve çözüm üretilmiştir.
+
+<details>
+  <summary>Ekran Görüntüleri</summary>
+
+  <img src="https://github.com/user-attachments/assets/4563b058-b9d8-41ca-b0e2-e516608b7853" alt="image" width="827" height="817"/>
+
+</details>
+
+
+## Sprint Board Screenshotları
+
+Sprint 2 süresince görevler Trello panosunda Backlog, To Do, Doing ve Done listeleri altında yönetilmiştir. Sprint boyunca işlerin ilerlemesi görselleştirilmiş ve her görev bir ekip üyesine atanarak takip edilmiştir.
+
+<img width="1708" height="1059" alt="image" src="https://github.com/user-attachments/assets/420c3c54-52d1-4836-8c69-07976394c33c" />
+
+
+## Ürün Durumu: Ekran Görüntüleri
+
+Sprint sonunda sistemin aşağıdaki bileşenleri oluşturulmuştur:
+
+* Veritabanı kurulumu ve temel veri yapıları
+* Anormal değerlerin tespiti için kullanılacak veri setinin hazırlanması (RAG sistemi)
+* LLM ile örnek prompt testleri ve doktor notu-öneri bağlantısı
+* Frontend tarafında giriş ekranı ve panel iskeleti oluşturuldu.
+<details>
+  <summary>Ekran Görüntüleri</summary>
+
+  <img src="https://github.com/user-attachments/assets/7b0df87d-8aa4-46d2-8c3c-de0ad5e27292" alt="Ürün Durumu: Ekran Görüntüleri" width="600"/>
+
+</details>
+
+Bu yapılar, sonraki sprintte ürünün işlevsel hale gelmesine temel sağlayacaktır.
+
+## Sprint Review
+
+Sprint Review toplantısında, planlanan tüm işlerin zamanında tamamlandığı görülmüştür. Ekip üyeleri, backend ve frontend tarafında uyumlu çalışarak sistemin temel parçalarını ortaya koymuştur. LLM test sonuçları olumlu değerlendirilmiş ve geliştirilmeye açık noktalar belirlenmiştir. Frontend iskeletinin oluşturulması, görsel testlerin başlamasına olanak sağlamıştır.
+
+## Sprint Retrospective
+
+Sprint sonunda ekip içi iş birliği yüksek bulunmuş, özellikle RAG veri seti hazırlanırken yaşanan zaman yönetimi sorunu ekip içi destekle çözülmüştür. Kod paylaşım süreçlerinin biraz daha sistematik hale getirilmesi ve test senaryolarının yazımına daha erken başlanması gerektiği not edilmiştir. Gelecek sprintte entegrasyon odaklı ilerlenmesi ve UI/UX testlerinin devreye alınması planlanmıştır.
 
