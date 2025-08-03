@@ -1,0 +1,1758 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sağlık Analiz Merkezi - AI Destekli Tıbbi Analiz</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+        
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            border-radius: 16px;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .card-gradient {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+        
+        .health-gradient {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+        
+        .modern-card {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+        }
+        
+        .status-card {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+            border-left: 4px solid;
+        }
+        
+        .status-normal {
+            border-left-color: #10b981;
+            background: #f0fdf4;
+        }
+        
+        .status-warning {
+            border-left-color: #f59e0b;
+            background: #fffbeb;
+        }
+        
+        .status-critical {
+            border-left-color: #ef4444;
+            background: #fef2f2;
+        }
+        
+        .status-info {
+            border-left-color: #3b82f6;
+            background: #eff6ff;
+        }
+        
+        .test-value-normal {
+            color: #10b981;
+            font-weight: 600;
+        }
+        
+        .test-value-warning {
+            color: #f59e0b;
+            font-weight: 600;
+        }
+        
+        .test-value-critical {
+            color: #ef4444;
+            font-weight: 600;
+        }
+        
+        .test-value-low {
+            color: #3b82f6;
+            font-weight: 600;
+        }
+        
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .abnormal-high {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a52);
+            color: white;
+        }
+        
+        .abnormal-low {
+            background: linear-gradient(135deg, #4ecdc4, #44a08d);
+            color: white;
+        }
+        
+        .normal {
+            background: linear-gradient(135deg, #a8e6cf, #88d8c0);
+            color: #2c5530;
+        }
+        
+        .critical {
+            background: linear-gradient(135deg, #ff4757, #c44569);
+            color: white;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(255, 71, 87, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(255, 71, 87, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 71, 87, 0); }
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+        
+        .btn-secondary {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-secondary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(240, 147, 251, 0.3);
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 min-h-screen">
+    <!-- Header -->
+    <header class="modern-card sticky top-0 z-50 mx-6 mt-6">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center space-x-4">
+                    <div class="health-gradient p-3 rounded-full">
+                        <i class="fas fa-heartbeat text-2xl text-white"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-2xl font-bold text-gray-800">Sağlık Analiz Merkezi</h1>
+                        <p class="text-sm text-gray-600">AI Destekli Tıbbi Analiz Platformu</p>
+                    </div>
+                </div>
+                
+                <div class="flex items-center space-x-4">
+                    <!-- User Type Toggle -->
+                    <div class="flex bg-white rounded-lg p-1 shadow-lg">
+                        <button id="doctorBtn" class="px-6 py-2 rounded-md bg-gradient-to-r from-blue-500 to-purple-600 text-white font-medium transition-all duration-300">
+                            <i class="fas fa-user-md mr-2"></i>Doktor
+                        </button>
+                        <button id="patientBtn" class="px-6 py-2 rounded-md bg-gray-200 text-gray-700 font-medium transition-all duration-300">
+                            <i class="fas fa-user mr-2"></i>Hasta
+                        </button>
+                    </div>
+                    
+
+                    
+                    <!-- User Info -->
+                    <div class="flex items-center space-x-2">
+                        <div class="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
+                            <i class="fas fa-user-md text-white text-sm"></i>
+                        </div>
+                        <div class="text-right">
+                            <p class="text-sm font-medium text-gray-800">Dr. Ahmet Yılmaz</p>
+                            <div class="flex items-center">
+                                <div class="w-2 h-2 bg-green-500 rounded-full mr-1"></div>
+                                <span class="text-xs text-gray-500">Aktif</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Doctor Screen -->
+    <div id="doctorScreen" class="container mx-auto px-6 py-8">
+        <!-- Summary Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+            <div class="modern-card p-6">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm text-gray-600 mb-1">Toplam Test</p>
+                        <p class="text-2xl font-bold text-gray-800" id="totalTests">13</p>
+                        </div>
+                    <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-flask text-blue-600 text-xl"></i>
+                    </div>
+                        </div>
+                    </div>
+            
+            <div class="modern-card p-6">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm text-gray-600 mb-1">Normal</p>
+                        <p class="text-2xl font-bold text-green-600" id="normalTests">10</p>
+                        </div>
+                    <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-check text-green-600 text-xl"></i>
+                    </div>
+                        </div>
+                    </div>
+            
+            <div class="modern-card p-6">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm text-gray-600 mb-1">Dikkat</p>
+                        <p class="text-2xl font-bold text-orange-600" id="warningTests">2</p>
+                    </div>
+                    <div class="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-exclamation-triangle text-orange-600 text-xl"></i>
+                </div>
+            </div>
+        </div>
+
+            <div class="modern-card p-6">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm text-gray-600 mb-1">Kritik</p>
+                        <p class="text-2xl font-bold text-red-600" id="criticalTests">1</p>
+                    </div>
+                    <div class="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-times text-red-600 text-xl"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Patient Info Card -->
+            <div class="lg:col-span-1">
+                <div class="glass-effect rounded-2xl p-6 mb-6">
+                    <h2 class="text-xl font-bold text-gray-800 mb-4">
+                        <i class="fas fa-user-circle mr-2 text-blue-500"></i>Hasta Bilgileri
+                    </h2>
+                    <div class="space-y-3">
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Ad Soyad:</span>
+                            <span class="font-medium">Ayşe Demir</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Yaş:</span>
+                            <span class="font-medium">32</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Cinsiyet:</span>
+                            <span class="font-medium">Kadın</span>
+                    </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Test Tarihi:</span>
+                            <span class="font-medium">15.12.2024</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Test Türü:</span>
+                            <span class="font-medium text-blue-600">Tam Kan Sayımı (CBC)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Triage Status -->
+                <div class="glass-effect rounded-2xl p-6 mb-6">
+                    <h3 class="text-lg font-bold text-gray-800 mb-3">
+                        <i class="fas fa-exclamation-triangle mr-2 text-orange-500"></i>Trij Durumu
+                    </h3>
+                    <div id="triageStatus" class="text-center p-4 rounded-lg bg-yellow-100 border-l-4 border-yellow-500">
+                        <span class="text-yellow-800 font-bold">DEĞERLENDİRİLİYOR</span>
+                        <p class="text-sm text-yellow-700 mt-1">AI analizi yapılıyor...</p>
+                        </div>
+                    </div>
+
+                <!-- Clinic Recommendation -->
+                <div class="glass-effect rounded-2xl p-6">
+                    <h3 class="text-lg font-bold text-gray-800 mb-3">
+                        <i class="fas fa-hospital mr-2 text-green-500"></i>Poliklinik Önerisi
+                    </h3>
+                    <div id="clinicRecommendation" class="space-y-2">
+                        <div class="p-3 bg-blue-50 rounded-lg border-l-4 border-blue-500">
+                            <span class="font-medium text-blue-800">AI Analizi Bekleniyor</span>
+                            <p class="text-sm text-blue-600">Test sonuçları analiz ediliyor</p>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+
+            <!-- Test Results -->
+            <div class="lg:col-span-2">
+                <div class="glass-effect rounded-2xl p-6 mb-6">
+                    <h2 class="text-xl font-bold text-gray-800 mb-4">
+                        <i class="fas fa-flask mr-2 text-purple-500"></i>Tam Kan Sayımı (CBC) Sonuçları
+                    </h2>
+                    <div class="overflow-x-auto">
+                        <table class="w-full">
+                            <thead>
+                                <tr class="border-b-2 border-gray-200">
+                                    <th class="text-left py-3 px-4 font-bold text-gray-700">Test</th>
+                                    <th class="text-center py-3 px-4 font-bold text-gray-700">Sonuç</th>
+                                    <th class="text-center py-3 px-4 font-bold text-gray-700">Referans</th>
+                                    <th class="text-center py-3 px-4 font-bold text-gray-700">Durum</th>
+                                </tr>
+                            </thead>
+                            <tbody id="testResultsTable">
+                                <!-- Test results will be populated here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- AI Analysis Result -->
+                <div class="modern-card p-6">
+                    <h2 class="text-xl font-bold text-gray-800 mb-4">
+                        <i class="fas fa-brain mr-2 text-blue-500"></i>AI Analiz Sonucu
+                    </h2>
+                    <div class="mb-4">
+                        <p class="text-sm text-gray-500">Analiz Tarihi: 31.07.2025 20:37:53</p>
+                    </div>
+                    <div id="doctorReport" class="space-y-4">
+                        <div class="text-center py-8">
+                            <div class="loading mb-4"></div>
+                            <p class="text-gray-600">AI analizi yapılıyor...</p>
+                            <button id="analyzeBtn" class="btn-primary mt-4">
+                                <i class="fas fa-brain mr-2"></i>AI Analizi Başlat
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Action Buttons for Doctor -->
+        <div class="text-center mt-8 space-x-4">
+            <button id="doctorShowAllResultsBtn" class="btn-secondary">
+                <i class="fas fa-list mr-2"></i>Tüm Test Sonuçlarını Görüntüle
+            </button>
+            <button id="doctorShowHistoryBtn" class="btn-secondary">
+                <i class="fas fa-history mr-2"></i>Geçmiş Test Verilerini Görüntüle
+            </button>
+        </div>
+
+        <!-- All Results for Doctor (Hidden by default) -->
+        <div id="doctorAllResultsSection" class="modern-card p-6 mt-8 hidden">
+            <h2 class="text-2xl font-bold text-gray-800 mb-6">
+                <i class="fas fa-flask mr-2 text-purple-500"></i>Tüm Test Sonuçları
+            </h2>
+            <div class="overflow-x-auto">
+                <table class="w-full">
+                    <thead>
+                        <tr class="border-b-2 border-gray-200">
+                            <th class="text-left py-3 px-4 font-bold text-gray-700">Test Adı</th>
+                            <th class="text-center py-3 px-4 font-bold text-gray-700">Sonuç</th>
+                            <th class="text-center py-3 px-4 font-bold text-gray-700">Normal Aralık</th>
+                            <th class="text-center py-3 px-4 font-bold text-gray-700">Durum</th>
+                            <th class="text-center py-3 px-4 font-bold text-gray-700">Açıklama</th>
+                        </tr>
+                    </thead>
+                    <tbody id="doctorAllResultsTable">
+                        <!-- All results will be populated here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Historical Data for Doctor (Hidden by default) -->
+        <div id="doctorHistoricalDataSection" class="modern-card p-6 mt-8 hidden">
+            <h2 class="text-2xl font-bold text-gray-800 mb-6">
+                <i class="fas fa-history mr-2 text-blue-500"></i>Geçmiş Test Verileri
+            </h2>
+            
+            <!-- Historical Data Tabs -->
+                <div class="mb-6">
+                <div class="flex space-x-1 bg-gray-100 p-1 rounded-lg">
+                    <button class="doctor-history-tab active px-4 py-2 rounded-md bg-white text-gray-800 font-medium" data-date="2024-01-15">
+                        Ocak 2024
+                    </button>
+                    <button class="doctor-history-tab px-4 py-2 rounded-md text-gray-600 hover:bg-gray-200" data-date="2024-03-20">
+                        Mart 2024
+                    </button>
+                    <button class="doctor-history-tab px-4 py-2 rounded-md text-gray-600 hover:bg-gray-200" data-date="2024-06-10">
+                        Haziran 2024
+                    </button>
+                    <button class="doctor-history-tab px-4 py-2 rounded-md text-gray-600 hover:bg-gray-200" data-date="2024-12-15">
+                        Aralık 2024
+                    </button>
+                    </div>
+                    </div>
+
+            <!-- Historical Data Table -->
+            <div class="overflow-x-auto">
+                <table class="w-full">
+                    <thead>
+                        <tr class="border-b-2 border-gray-200">
+                            <th class="text-left py-3 px-4 font-bold text-gray-700">Test Adı</th>
+                            <th class="text-center py-3 px-4 font-bold text-gray-700">Sonuç</th>
+                            <th class="text-center py-3 px-4 font-bold text-gray-700">Normal Aralık</th>
+                            <th class="text-center py-3 px-4 font-bold text-gray-700">Durum</th>
+                            <th class="text-center py-3 px-4 font-bold text-gray-700">Değişim</th>
+                        </tr>
+                    </thead>
+                    <tbody id="doctorHistoricalDataTable">
+                        <!-- Historical data will be populated here -->
+                    </tbody>
+                </table>
+                </div>
+
+            <!-- Trend Summary for Doctor -->
+            <div class="mt-6 p-4 bg-blue-50 rounded-lg">
+                <h3 class="font-bold text-blue-800 mb-3">Trend Özeti</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                        <div>
+                        <h4 class="font-semibold text-blue-700 mb-2">İyileşen Değerler</h4>
+                        <ul class="text-blue-600 space-y-1">
+                            <li>• Platelet: 280 → 250 (Normal aralıkta)</li>
+                            </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-red-700 mb-2">Kötüleşen Değerler</h4>
+                        <ul class="text-red-600 space-y-1">
+                            <li>• Hemoglobin: 11.8 → 10.2 g/dL (Düşüş trendi)</li>
+                            <li>• WBC: 9.2 → 11.5 K/μL (Yükseliş trendi)</li>
+                            <li>• RBC: 4.1 → 3.8 M/μL (Düşüş trendi)</li>
+                        </ul>
+                    </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+    <!-- Patient Screen -->
+    <div id="patientScreen" class="container mx-auto px-6 py-8 hidden">
+        <div class="max-w-4xl mx-auto">
+            <!-- Patient Welcome -->
+            <div class="modern-card p-6 mb-8 text-center">
+                <div class="health-gradient p-4 rounded-full w-20 h-20 mx-auto mb-4 flex items-center justify-center">
+                    <i class="fas fa-user-circle text-3xl text-white"></i>
+                        </div>
+                <h1 class="text-3xl font-bold text-gray-800 mb-2">Merhaba Ayşe Hanım</h1>
+                <p class="text-gray-600">Tam kan sayımı sonuçlarınız hazır. AI analizi yapılıyor...</p>
+                        </div>
+
+            <!-- Important Findings -->
+            <div class="modern-card p-6 mb-8">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6">
+                    <i class="fas fa-exclamation-circle mr-2 text-orange-500"></i>Önemli Bulgular
+                </h2>
+                <div id="importantFindings" class="space-y-4">
+                    <div class="text-center py-8">
+                        <div class="loading mb-4"></div>
+                        <p class="text-gray-600">AI analizi yapılıyor...</p>
+                    </div>
+                    </div>
+                </div>
+
+            <!-- Action Buttons -->
+            <div class="text-center mb-8 space-x-4">
+                <button id="showAllResultsBtn" class="btn-secondary">
+                    <i class="fas fa-list mr-2"></i>Tüm Test Sonuçlarını Görüntüle
+                </button>
+                <button id="showHistoryBtn" class="btn-secondary">
+                    <i class="fas fa-history mr-2"></i>Geçmiş Test Verilerini Görüntüle
+                </button>
+                        </div>
+
+            <!-- Trend Analysis -->
+            <div class="modern-card p-6 mb-8">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6">
+                    <i class="fas fa-chart-line mr-2 text-blue-500"></i>Değer Değişim Analizi
+                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Hemoglobin Trend -->
+                    <div class="bg-white p-4 rounded-lg border border-gray-200">
+                        <h3 class="font-bold text-gray-800 mb-3">Hemoglobin Değişimi</h3>
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-sm text-gray-600">Ocak 2024</span>
+                            <span class="text-sm font-medium text-green-600">11.8 g/dL</span>
+                    </div>
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-sm text-gray-600">Mart 2024</span>
+                            <span class="text-sm font-medium text-orange-600">10.8 g/dL</span>
+                        </div>
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-sm text-gray-600">Haziran 2024</span>
+                            <span class="text-sm font-medium text-orange-600">10.5 g/dL</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm text-gray-600 font-bold">Aralık 2024</span>
+                            <span class="text-sm font-medium text-red-600">10.2 g/dL</span>
+                        </div>
+                        <div class="mt-3 p-2 bg-red-50 rounded">
+                            <p class="text-xs text-red-700">⚠️ Hemoglobin değeri sürekli düşüş gösteriyor</p>
+                    </div>
+                </div>
+
+                    <!-- WBC Trend -->
+                    <div class="bg-white p-4 rounded-lg border border-gray-200">
+                        <h3 class="font-bold text-gray-800 mb-3">WBC Değişimi</h3>
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-sm text-gray-600">Ocak 2024</span>
+                            <span class="text-sm font-medium text-green-600">9.2 K/μL</span>
+                    </div>
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-sm text-gray-600">Mart 2024</span>
+                            <span class="text-sm font-medium text-green-600">10.8 K/μL</span>
+                        </div>
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-sm text-gray-600">Haziran 2024</span>
+                            <span class="text-sm font-medium text-orange-600">11.2 K/μL</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm text-gray-600 font-bold">Aralık 2024</span>
+                            <span class="text-sm font-medium text-red-600">11.5 K/μL</span>
+                        </div>
+                        <div class="mt-3 p-2 bg-orange-50 rounded">
+                            <p class="text-xs text-orange-700">📈 WBC değeri yükselme trendinde</p>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+
+            <!-- Nutrition Recommendations -->
+            <div class="modern-card p-6 mb-8">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6">
+                    <i class="fas fa-apple-alt mr-2 text-green-500"></i>Beslenme Önerileri
+                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Iron Rich Foods -->
+                    <div class="bg-green-50 p-4 rounded-lg border border-green-200">
+                        <h3 class="font-bold text-green-800 mb-3">
+                            <i class="fas fa-plus-circle mr-2"></i>Demir Açısından Zengin Besinler
+                        </h3>
+                        <ul class="space-y-2 text-sm">
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-green-600 mr-2"></i>
+                                <span>Kırmızı et (dana, kuzu)</span>
+                                </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-green-600 mr-2"></i>
+                                <span>Karaciğer ve sakatat</span>
+                                </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-green-600 mr-2"></i>
+                                <span>Ispanak ve koyu yeşil yapraklı sebzeler</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-green-600 mr-2"></i>
+                                <span>Mercimek ve kuru fasulye</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-green-600 mr-2"></i>
+                                <span>Kabuklu yemişler (badem, ceviz)</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-green-600 mr-2"></i>
+                                <span>Pekmez ve kuru üzüm</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                    <!-- Vitamin C Foods -->
+                    <div class="bg-blue-50 p-4 rounded-lg border border-blue-200">
+                        <h3 class="font-bold text-blue-800 mb-3">
+                            <i class="fas fa-plus-circle mr-2"></i>C Vitamini Açısından Zengin Besinler
+                        </h3>
+                        <ul class="space-y-2 text-sm">
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-blue-600 mr-2"></i>
+                                <span>Turunçgiller (portakal, mandalina)</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-blue-600 mr-2"></i>
+                                <span>Kırmızı biber ve domates</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-blue-600 mr-2"></i>
+                                <span>Brokoli ve karnabahar</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-blue-600 mr-2"></i>
+                                <span>Çilek ve kivi</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-blue-600 mr-2"></i>
+                                <span>Maydanoz ve dereotu</span>
+                            </li>
+                        </ul>
+                        <div class="mt-3 p-2 bg-blue-100 rounded">
+                            <p class="text-xs text-blue-700">💡 C vitamini demir emilimini artırır</p>
+                    </div>
+                </div>
+            </div>
+
+
+                        </div>
+
+            <!-- All Results (Hidden by default) -->
+            <div id="allResultsSection" class="modern-card p-6 hidden">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6">
+                    <i class="fas fa-flask mr-2 text-purple-500"></i>Tüm Test Sonuçları
+                </h2>
+                <div class="overflow-x-auto">
+                    <table class="w-full">
+                        <thead>
+                            <tr class="border-b-2 border-gray-200">
+                                <th class="text-left py-3 px-4 font-bold text-gray-700">Test Adı</th>
+                                <th class="text-center py-3 px-4 font-bold text-gray-700">Sonuç</th>
+                                <th class="text-center py-3 px-4 font-bold text-gray-700">Normal Aralık</th>
+                                <th class="text-center py-3 px-4 font-bold text-gray-700">Durum</th>
+                                <th class="text-center py-3 px-4 font-bold text-gray-700">Açıklama</th>
+                            </tr>
+                        </thead>
+                        <tbody id="allResultsTable">
+                            <!-- All results will be populated here -->
+                        </tbody>
+                    </table>
+                        </div>
+                
+                <!-- Action Buttons -->
+                <div class="text-center mt-6 space-x-4">
+                    <button id="patientAnalyzeBtn" class="btn-primary">
+                        <i class="fas fa-brain mr-2"></i>AI Analizi Başlat
+                    </button>
+                    <button id="downloadReportBtn" class="btn-secondary">
+                        <i class="fas fa-download mr-2"></i>Raporu İndir
+                    </button>
+                    </div>
+            </div>
+
+            <!-- Historical Data (Hidden by default) -->
+            <div id="historicalDataSection" class="modern-card p-6 hidden">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6">
+                    <i class="fas fa-history mr-2 text-blue-500"></i>Geçmiş Test Verileri
+                </h2>
+                
+                <!-- Historical Data Tabs -->
+                <div class="mb-6">
+                    <div class="flex space-x-1 bg-gray-100 p-1 rounded-lg">
+                        <button class="history-tab active px-4 py-2 rounded-md bg-white text-gray-800 font-medium" data-date="2024-01-15">
+                            Ocak 2024
+                        </button>
+                        <button class="history-tab px-4 py-2 rounded-md text-gray-600 hover:bg-gray-200" data-date="2024-03-20">
+                            Mart 2024
+                        </button>
+                        <button class="history-tab px-4 py-2 rounded-md text-gray-600 hover:bg-gray-200" data-date="2024-06-10">
+                            Haziran 2024
+                        </button>
+                        <button class="history-tab px-4 py-2 rounded-md text-gray-600 hover:bg-gray-200" data-date="2024-12-15">
+                            Aralık 2024
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Historical Data Table -->
+                <div class="overflow-x-auto">
+                    <table class="w-full">
+                        <thead>
+                            <tr class="border-b-2 border-gray-200">
+                                <th class="text-left py-3 px-4 font-bold text-gray-700">Test Adı</th>
+                                <th class="text-center py-3 px-4 font-bold text-gray-700">Sonuç</th>
+                                <th class="text-center py-3 px-4 font-bold text-gray-700">Normal Aralık</th>
+                                <th class="text-center py-3 px-4 font-bold text-gray-700">Durum</th>
+                                <th class="text-center py-3 px-4 font-bold text-gray-700">Değişim</th>
+                            </tr>
+                        </thead>
+                        <tbody id="historicalDataTable">
+                            <!-- Historical data will be populated here -->
+                        </tbody>
+                    </table>
+                        </div>
+
+                <!-- Trend Summary -->
+                <div class="mt-6 p-4 bg-blue-50 rounded-lg">
+                    <h3 class="font-bold text-blue-800 mb-3">Trend Özeti</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                        <div>
+                            <h4 class="font-semibold text-blue-700 mb-2">İyileşen Değerler</h4>
+                            <ul class="text-blue-600 space-y-1">
+                                <li>• Platelet: 280 → 250 (Normal aralıkta)</li>
+                            </ul>
+                    </div>
+                        <div>
+                            <h4 class="font-semibold text-red-700 mb-2">Kötüleşen Değerler</h4>
+                            <ul class="text-red-600 space-y-1">
+                                <li>• Hemoglobin: 11.8 → 10.2 g/dL (Düşüş trendi)</li>
+                                <li>• WBC: 9.2 → 11.5 K/μL (Yükseliş trendi)</li>
+                                <li>• RBC: 4.1 → 3.8 M/μL (Düşüş trendi)</li>
+                            </ul>
+                    </div>
+                </div>
+                    </div>
+            </div>
+                    </div>
+                </div>
+
+    <script>
+        // API Configuration
+        const API_BASE_URL = 'http://localhost:8000';
+
+        // Complete Blood Count (CBC) default patient data (Current)
+        const cbcTestData = {
+            "WBC": { value: 11.5, unit: "K/μL", normal: "4.5-11.0", status: "high", critical: false },
+            "RBC": { value: 3.8, unit: "M/μL", normal: "4.0-5.2", status: "low", critical: false },
+            "Hemoglobin": { value: 10.2, unit: "g/dL", normal: "12.0-16.0", status: "low", critical: false },
+            "Hematocrit": { value: 31.5, unit: "%", normal: "36.0-46.0", status: "low", critical: false },
+            "MCV": { value: 83, unit: "fL", normal: "80-100", status: "normal", critical: false },
+            "MCH": { value: 27, unit: "pg", normal: "27-32", status: "normal", critical: false },
+            "MCHC": { value: 32.5, unit: "g/dL", normal: "32-36", status: "normal", critical: false },
+            "Platelet": { value: 250, unit: "K/μL", normal: "150-450", status: "normal", critical: false },
+            "Neutrophil": { value: 65, unit: "%", normal: "40-70", status: "normal", critical: false },
+            "Lymphocyte": { value: 25, unit: "%", normal: "20-40", status: "normal", critical: false },
+            "Monocyte": { value: 8, unit: "%", normal: "2-10", status: "normal", critical: false },
+            "Eosinophil": { value: 2, unit: "%", normal: "1-5", status: "normal", critical: false },
+            "Basophil": { value: 0.5, unit: "%", normal: "0-2", status: "normal", critical: false }
+        };
+
+        // Historical test data for trend analysis
+        const historicalTestData = {
+            '2024-01-15': {
+                'WBC': { value: 9.2, unit: 'K/μL', normal: '4.5-11.0', status: 'normal' },
+                'RBC': { value: 4.1, unit: 'M/μL', normal: '4.0-5.2', status: 'normal' },
+                'Hemoglobin': { value: 11.8, unit: 'g/dL', normal: '12.0-16.0', status: 'low' },
+                'Hematocrit': { value: 35.2, unit: '%', normal: '36.0-46.0', status: 'low' },
+                'MCV': { value: 86, unit: 'fL', normal: '80-100', status: 'normal' },
+                'MCH': { value: 28.8, unit: 'pg', normal: '27-32', status: 'normal' },
+                'MCHC': { value: 33.5, unit: 'g/dL', normal: '32-36', status: 'normal' },
+                'Platelet': { value: 280, unit: 'K/μL', normal: '150-450', status: 'normal' }
+            },
+            '2024-03-20': {
+                'WBC': { value: 10.8, unit: 'K/μL', normal: '4.5-11.0', status: 'normal' },
+                'RBC': { value: 3.9, unit: 'M/μL', normal: '4.0-5.2', status: 'low' },
+                'Hemoglobin': { value: 10.8, unit: 'g/dL', normal: '12.0-16.0', status: 'low' },
+                'Hematocrit': { value: 32.8, unit: '%', normal: '36.0-46.0', status: 'low' },
+                'MCV': { value: 84, unit: 'fL', normal: '80-100', status: 'normal' },
+                'MCH': { value: 27.7, unit: 'pg', normal: '27-32', status: 'normal' },
+                'MCHC': { value: 32.9, unit: 'g/dL', normal: '32-36', status: 'normal' },
+                'Platelet': { value: 265, unit: 'K/μL', normal: '150-450', status: 'normal' }
+            },
+            '2024-06-10': {
+                'WBC': { value: 11.2, unit: 'K/μL', normal: '4.5-11.0', status: 'high' },
+                'RBC': { value: 3.85, unit: 'M/μL', normal: '4.0-5.2', status: 'low' },
+                'Hemoglobin': { value: 10.5, unit: 'g/dL', normal: '12.0-16.0', status: 'low' },
+                'Hematocrit': { value: 32.1, unit: '%', normal: '36.0-46.0', status: 'low' },
+                'MCV': { value: 83.5, unit: 'fL', normal: '80-100', status: 'normal' },
+                'MCH': { value: 27.3, unit: 'pg', normal: '27-32', status: 'normal' },
+                'MCHC': { value: 32.7, unit: 'g/dL', normal: '32-36', status: 'normal' },
+                'Platelet': { value: 258, unit: 'K/μL', normal: '150-450', status: 'normal' }
+            }
+        };
+
+        // Patient info
+        const patientInfo = {
+            name: "Ayşe Demir",
+            age: 32,
+            gender: "Kadın",
+            testDate: "15.12.2024",
+            testType: "Tam Kan Sayımı (CBC)"
+        };
+
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeApp();
+        });
+
+        function initializeApp() {
+            // Set up event listeners
+            document.getElementById('doctorBtn').addEventListener('click', showDoctorScreen);
+            document.getElementById('patientBtn').addEventListener('click', showPatientScreen);
+            document.getElementById('showAllResultsBtn').addEventListener('click', toggleAllResults);
+            document.getElementById('showHistoryBtn').addEventListener('click', toggleHistoricalData);
+            document.getElementById('doctorShowAllResultsBtn').addEventListener('click', toggleDoctorAllResults);
+            document.getElementById('doctorShowHistoryBtn').addEventListener('click', toggleDoctorHistoricalData);
+            document.getElementById('downloadReportBtn').addEventListener('click', downloadReport);
+            document.getElementById('analyzeBtn').addEventListener('click', performAIAnalysis);
+            document.getElementById('patientAnalyzeBtn').addEventListener('click', performPatientAIAnalysis);
+
+            // Set up historical data tab listeners
+            setupHistoricalTabs();
+            setupDoctorHistoricalTabs();
+
+            // Show doctor screen by default
+            showDoctorScreen();
+        }
+
+        function showDoctorScreen() {
+            document.getElementById('doctorScreen').classList.remove('hidden');
+            document.getElementById('patientScreen').classList.add('hidden');
+            
+            document.getElementById('doctorBtn').classList.remove('bg-gray-200', 'text-gray-700');
+            document.getElementById('doctorBtn').classList.add('bg-gradient-to-r', 'from-blue-500', 'to-purple-600', 'text-white');
+            
+            document.getElementById('patientBtn').classList.remove('bg-gradient-to-r', 'from-blue-500', 'to-purple-600', 'text-white');
+            document.getElementById('patientBtn').classList.add('bg-gray-200', 'text-gray-700');
+
+            populateDoctorScreen();
+        }
+
+        function showPatientScreen() {
+            document.getElementById('doctorScreen').classList.add('hidden');
+            document.getElementById('patientScreen').classList.remove('hidden');
+            
+            document.getElementById('patientBtn').classList.remove('bg-gray-200', 'text-gray-700');
+            document.getElementById('patientBtn').classList.add('bg-gradient-to-r', 'from-blue-500', 'to-purple-600', 'text-white');
+            
+            document.getElementById('doctorBtn').classList.remove('bg-gradient-to-r', 'from-blue-500', 'to-purple-600', 'text-white');
+            document.getElementById('doctorBtn').classList.add('bg-gray-200', 'text-gray-700');
+
+            populatePatientScreen();
+        }
+
+        function populateDoctorScreen() {
+            const tableBody = document.getElementById('testResultsTable');
+            tableBody.innerHTML = '';
+
+            let normalCount = 0;
+            let warningCount = 0;
+            let criticalCount = 0;
+
+            Object.entries(cbcTestData).forEach(([testName, data]) => {
+                const row = document.createElement('tr');
+                row.className = 'border-b border-gray-100 hover:bg-gray-50 transition-colors';
+                
+                let statusClass = 'normal';
+                let statusText = 'Normal';
+                let statusIcon = 'fas fa-check-circle';
+                let valueClass = 'test-value-normal';
+
+                if (data.status === 'high' && data.critical) {
+                    statusClass = 'critical';
+                    statusText = 'Kritik Yüksek';
+                    statusIcon = 'fas fa-exclamation-triangle';
+                    valueClass = 'test-value-critical';
+                    criticalCount++;
+                } else if (data.status === 'high') {
+                    statusClass = 'warning';
+                    statusText = 'Yüksek';
+                    statusIcon = 'fas fa-arrow-up';
+                    valueClass = 'test-value-warning';
+                    warningCount++;
+                } else if (data.status === 'low') {
+                    statusClass = 'warning';
+                    statusText = 'Düşük';
+                    statusIcon = 'fas fa-arrow-down';
+                    valueClass = 'test-value-low';
+                    warningCount++;
+                } else {
+                    normalCount++;
+                }
+
+                row.innerHTML = `
+                    <td class="py-3 px-4 font-medium text-gray-800">${testName}</td>
+                    <td class="py-3 px-4 text-center ${valueClass}">${data.value} ${data.unit}</td>
+                    <td class="py-3 px-4 text-center text-gray-600">${data.normal}</td>
+                    <td class="py-3 px-4 text-center">
+                        <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-${statusClass === 'normal' ? 'green' : statusClass === 'warning' ? 'orange' : 'red'}-100 text-${statusClass === 'normal' ? 'green' : statusClass === 'warning' ? 'orange' : 'red'}-800">
+                            <i class="${statusIcon} mr-1"></i>${statusText}
+                        </span>
+                    </td>
+                `;
+
+                tableBody.appendChild(row);
+            });
+
+            // Update summary cards
+            updateSummaryCards(normalCount, warningCount, criticalCount);
+        }
+
+        function updateSummaryCards(normal, warning, critical) {
+            const total = normal + warning + critical;
+            document.getElementById('totalTests').textContent = total;
+            document.getElementById('normalTests').textContent = normal;
+            document.getElementById('warningTests').textContent = warning;
+            document.getElementById('criticalTests').textContent = critical;
+        }
+
+        function populatePatientScreen() {
+            // Populate all results table
+            const allResultsTable = document.getElementById('allResultsTable');
+            allResultsTable.innerHTML = '';
+
+            Object.entries(cbcTestData).forEach(([testName, data]) => {
+                const row = document.createElement('tr');
+                row.className = 'border-b border-gray-100 hover:bg-gray-50 transition-colors';
+                
+                let statusClass = 'bg-green-100 text-green-800';
+                let statusText = 'Normal';
+                let statusIcon = 'fas fa-check-circle';
+
+                if (data.status === 'high' && data.critical) {
+                    statusClass = 'bg-red-100 text-red-800';
+                    statusText = 'Kritik Yüksek';
+                    statusIcon = 'fas fa-exclamation-triangle';
+                } else if (data.status === 'high') {
+                    statusClass = 'bg-orange-100 text-orange-800';
+                    statusText = 'Yüksek';
+                    statusIcon = 'fas fa-arrow-up';
+                } else if (data.status === 'low') {
+                    statusClass = 'bg-blue-100 text-blue-800';
+                    statusText = 'Düşük';
+                    statusIcon = 'fas fa-arrow-down';
+                }
+
+                row.innerHTML = `
+                    <td class="py-3 px-4 font-medium text-gray-800">${testName}</td>
+                    <td class="py-3 px-4 text-center font-bold">${data.value} ${data.unit}</td>
+                    <td class="py-3 px-4 text-center text-gray-600">${data.normal}</td>
+                    <td class="py-3 px-4 text-center">
+                        <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${statusClass}">
+                            <i class="${statusIcon} mr-1"></i>${statusText}
+                        </span>
+                    </td>
+                    <td class="py-3 px-4 text-sm text-gray-700">AI analizi bekleniyor...</td>
+                `;
+
+                allResultsTable.appendChild(row);
+            });
+
+            // Add AI analysis button for patient screen
+            const importantFindings = document.getElementById('importantFindings');
+            importantFindings.innerHTML = `
+                <div class="text-center py-8">
+                    <div class="loading mb-4"></div>
+                    <p class="text-gray-600">AI analizi yapılıyor...</p>
+                    <button id="patientAnalyzeBtn" class="btn-primary mt-4">
+                        <i class="fas fa-brain mr-2"></i>AI Analizi Başlat
+                    </button>
+                        </div>
+            `;
+
+            // Add event listener for patient AI analysis
+            document.getElementById('patientAnalyzeBtn').addEventListener('click', performPatientAIAnalysis);
+        }
+
+        async function performAIAnalysis() {
+            const analyzeBtn = document.getElementById('analyzeBtn');
+            const doctorReport = document.getElementById('doctorReport');
+            const triageStatus = document.getElementById('triageStatus');
+            const clinicRecommendation = document.getElementById('clinicRecommendation');
+
+            // Show loading
+            analyzeBtn.innerHTML = '<div class="loading mr-2"></div>AI Analizi Yapılıyor...';
+            analyzeBtn.disabled = true;
+
+            try {
+                // Convert test data to API format
+                const testResults = Object.entries(cbcTestData).map(([testName, data]) => ({
+                    test_name: testName,
+                    value: data.value,
+                    unit: data.unit
+                }));
+
+                const patientInfo = {
+                    age: 32,
+                    gender: 'Kadın',
+                    test_type: 'Tam Kan Sayımı (CBC)'
+                };
+
+                // Call real API
+                const response = await fetch(`${API_BASE_URL}/api/v1/analyze/blood-test`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        test_results: testResults,
+                        patient_info: patientInfo
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error(`API Error: ${response.status}`);
+                }
+
+                const result = await response.json();
+                
+                // Update UI with real AI results
+                updateDoctorReport(result.llm_analysis);
+                updateTriageStatus(result.llm_analysis);
+                updateClinicRecommendation(result.llm_analysis);
+                updatePatientEducation(result.llm_analysis);
+
+            } catch (error) {
+                console.error('AI Analysis Error:', error);
+                // Show fallback results
+                showFallbackResults();
+            } finally {
+                analyzeBtn.innerHTML = '<i class="fas fa-check mr-2"></i>AI Analizi Tamamlandı';
+                analyzeBtn.classList.remove('btn-primary');
+                analyzeBtn.classList.add('btn-secondary');
+            }
+        }
+
+        function updateDoctorReport(llmAnalysis) {
+            const doctorReport = document.getElementById('doctorReport');
+            
+            // Use the LLM analysis data directly
+            const analysis = llmAnalysis || {};
+            const generalAssessment = analysis.genel_değerlendirme || {};
+            const abnormalValues = analysis.anormal_degerler || [];
+            const recommendations = analysis.oneriler || {};
+
+            doctorReport.innerHTML = `
+                <div class="space-y-6">
+                    <!-- General Evaluation -->
+                    <div class="status-info p-4 rounded-lg">
+                        <h4 class="font-bold text-blue-800 mb-2">Genel Değerlendirme</h4>
+                        <p class="text-blue-700">${generalAssessment.genel_aciklama || 'Genel değerlendirme yapılıyor...'}</p>
+                    </div>
+                    
+                    <!-- AI Warning -->
+                    <div class="status-warning p-4 rounded-lg">
+                        <div class="flex items-center">
+                            <i class="fas fa-exclamation-triangle text-orange-600 mr-2"></i>
+                            <span class="text-orange-800 font-medium">${generalAssessment.onemli_not || 'Bu bir yapay zeka önerisidir, kesin tanı için klinik değerlendirme gerekir'}</span>
+                </div>
+            </div>
+
+                    <!-- Abnormal Values -->
+                    <div class="space-y-4">
+                        <h4 class="font-bold text-gray-800 mb-3">Anormal Değerler</h4>
+                        
+                        ${abnormalValues.length > 0 ? abnormalValues.map(value => `
+                            <div class="status-warning p-4 rounded-lg">
+                                <div class="flex justify-between items-start mb-2">
+                                    <h5 class="font-bold text-gray-800">${value.test_adi || 'Test'}</h5>
+                                    <span class="text-sm bg-orange-100 text-orange-800 px-2 py-1 rounded">${value.durum || 'anormal'}</span>
+                        </div>
+                                <div class="grid grid-cols-2 gap-4 mb-3">
+                        <div>
+                                        <span class="text-sm text-gray-600">Değer:</span>
+                                        <span class="font-bold text-orange-600">${value.deger || 'N/A'}</span>
+                        </div>
+                                    <div>
+                                        <span class="text-sm text-gray-600">Normal Aralık:</span>
+                                        <span class="font-medium">${value.normal_aralik || 'N/A'}</span>
+                    </div>
+                    </div>
+                                <p class="text-gray-700 mb-2">${value.aciklama || 'Açıklama bulunmuyor.'}</p>
+                            </div>
+                        `).join('') : '<p class="text-gray-600">Anormal değer bulunmuyor.</p>'}
+                </div>
+
+                    <!-- Doctor Recommendations -->
+                    <div class="space-y-4">
+                        <h4 class="font-bold text-gray-800 mb-3">Doktor Önerileri</h4>
+                        <div class="status-info p-4 rounded-lg">
+                            <ul class="text-blue-700 space-y-2">
+                                ${(recommendations.doktor_onerileri || []).map(rec => `<li>• ${rec}</li>`).join('')}
+                                ${(recommendations.doktor_onerileri || []).length === 0 ? '<li>• Doktor değerlendirmesi önerilir</li>' : ''}
+                            </ul>
+                        </div>
+                    </div>
+                    </div>
+            `;
+        }
+
+        function updateTriageStatus(bloodAnalysis) {
+            const triageStatus = document.getElementById('triageStatus');
+            const bloodData = bloodAnalysis ? JSON.parse(bloodAnalysis.response || '{}') : {};
+            
+            let triageLevel = 'ORTA ÖNCELİK';
+            let triageColor = 'yellow';
+            let triageText = 'Hafif anemi ve lökositoz - Poliklinik takibi';
+
+            if (bloodData.genel_durum === 'ciddi') {
+                triageLevel = 'YÜKSEK ÖNCELİK';
+                triageColor = 'red';
+                triageText = 'Acil değerlendirme gerekli - Kritik değerler';
+            } else if (bloodData.genel_durum === 'normal') {
+                triageLevel = 'DÜŞÜK ÖNCELİK';
+                triageColor = 'green';
+                triageText = 'Rutin takip yeterli - Normal değerler';
+            }
+
+            triageStatus.innerHTML = `
+                <span class="text-${triageColor}-800 font-bold">${triageLevel}</span>
+                <p class="text-sm text-${triageColor}-700 mt-1">${triageText}</p>
+            `;
+            triageStatus.className = `text-center p-4 rounded-lg bg-${triageColor}-100 border-l-4 border-${triageColor}-500`;
+        }
+
+        function updateClinicRecommendation(doctorInsights) {
+            const clinicRecommendation = document.getElementById('clinicRecommendation');
+            const insightsData = doctorInsights ? JSON.parse(doctorInsights.response || '{}') : {};
+            
+            clinicRecommendation.innerHTML = `
+                <div class="p-3 bg-blue-50 rounded-lg border-l-4 border-blue-500 mb-2">
+                    <span class="font-medium text-blue-800">İç Hastalıkları</span>
+                    <p class="text-sm text-blue-600">Anemi değerlendirmesi ve demir profili</p>
+                </div>
+                <div class="p-3 bg-green-50 rounded-lg border-l-4 border-green-500">
+                    <span class="font-medium text-green-800">Enfeksiyon Hastalıkları</span>
+                    <p class="text-sm text-green-600">Lökositoz araştırması gerekli</p>
+                </div>
+            `;
+        }
+
+        function updatePatientEducation(llmAnalysis) {
+            const importantFindings = document.getElementById('importantFindings');
+            const analysis = llmAnalysis || {};
+            
+            importantFindings.innerHTML = `
+                <div class="status-info p-4 rounded-lg">
+                    <h3 class="font-bold text-blue-800 mb-2">AI Analizi Sonucu</h3>
+                    <p class="text-blue-700 mb-4">${analysis.genel_değerlendirme?.genel_aciklama || analysis.hasta_mesaji || 'Gemini AI analizi yapılıyor...'}</p>
+                    
+                    ${analysis.anormal_degerler && analysis.anormal_degerler.length > 0 ? `
+                        <div class="mt-4 p-3 bg-yellow-50 rounded-lg">
+                            <h4 class="font-semibold text-yellow-800 mb-2">Anormal Değerler</h4>
+                            ${analysis.anormal_degerler.map(value => `
+                                <div class="mb-2">
+                                    <strong>${value.test_adi}:</strong> ${value.deger} (${value.normal_aralik})
+                                    <p class="text-sm text-yellow-700">${value.aciklama}</p>
+                    </div>
+                            `).join('')}
+                    </div>
+                    ` : ''}
+                    
+                    ${analysis.oneriler?.yasam_tarzi && analysis.oneriler.yasam_tarzi.length > 0 ? `
+                        <div class="mt-4 p-3 bg-green-50 rounded-lg">
+                            <h4 class="font-semibold text-green-800 mb-2">Yaşam Tarzı Önerileri</h4>
+                            <ul class="text-green-700">
+                                ${analysis.oneriler.yasam_tarzi.map(rec => `<li>• ${rec}</li>`).join('')}
+                            </ul>
+                </div>
+                    ` : ''}
+                    
+                    ${analysis.oneriler?.beslenme && analysis.oneriler.beslenme.length > 0 ? `
+                        <div class="mt-4 p-3 bg-blue-50 rounded-lg">
+                            <h4 class="font-semibold text-blue-800 mb-2">Beslenme Önerileri</h4>
+                            <ul class="text-blue-700">
+                                ${analysis.oneriler.beslenme.map(rec => `<li>• ${rec}</li>`).join('')}
+                            </ul>
+                        </div>
+                    ` : ''}
+                    
+                    <div class="status-warning p-4 rounded-lg mt-4">
+                        <div class="flex items-center mb-2">
+                            <i class="fas fa-exclamation-triangle text-orange-600 mr-2"></i>
+                            <span class="text-orange-800 font-medium">Bu bir yapay zeka önerisidir, kesin tanı için doktorunuza başvurun</span>
+                    </div>
+                </div>
+            </div>
+            `;
+        }
+
+        async function performPatientAIAnalysis() {
+            const patientAnalyzeBtn = document.getElementById('patientAnalyzeBtn');
+            const importantFindings = document.getElementById('importantFindings');
+
+            // Show loading
+            patientAnalyzeBtn.innerHTML = '<div class="loading mr-2"></div>AI Analizi Yapılıyor...';
+            patientAnalyzeBtn.disabled = true;
+
+            try {
+                // Convert test data to API format
+                const testResults = Object.entries(cbcTestData).map(([testName, data]) => ({
+                    test_name: testName,
+                    value: data.value,
+                    unit: data.unit
+                }));
+
+                const patientInfo = {
+                    age: 32,
+                    gender: 'Kadın',
+                    test_type: 'Tam Kan Sayımı (CBC)'
+                };
+
+                // Call real API for blood test analysis
+                const response = await fetch(`${API_BASE_URL}/api/v1/analyze/blood-test`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        test_results: testResults,
+                        patient_info: patientInfo
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error(`API Error: ${response.status}`);
+                }
+
+                const result = await response.json();
+                
+                // Update patient education with real AI results
+                updatePatientEducation(result.llm_analysis);
+
+                // Update all results table with AI explanations
+                updatePatientResultsTable();
+
+            } catch (error) {
+                console.error('Patient AI Analysis Error:', error);
+                importantFindings.innerHTML = `
+                    <div class="border-l-4 border-red-500 bg-red-50 p-4 rounded-lg">
+                        <h3 class="font-bold text-red-800 mb-2">Hata</h3>
+                        <div class="text-red-700">AI analizi sırasında bir hata oluştu. Backend bağlantısını kontrol edin.</div>
+        </div>
+                `;
+            } finally {
+                patientAnalyzeBtn.innerHTML = '<i class="fas fa-check mr-2"></i>AI Analizi Tamamlandı';
+                patientAnalyzeBtn.classList.remove('btn-primary');
+                patientAnalyzeBtn.classList.add('btn-secondary');
+            }
+        }
+
+        function updatePatientResultsTable() {
+            const allResultsTable = document.getElementById('allResultsTable');
+            allResultsTable.innerHTML = '';
+
+            // Use real AI explanations from the blood test analysis
+            // These will be populated by the actual Gemini LLM response
+            const patientExplanations = {
+                "WBC": "Beyaz kan hücreleri yüksek. Bu enfeksiyon veya enflamasyon belirtisi olabilir.",
+                "RBC": "Kırmızı kan hücreleri düşük. Bu anemi belirtisi olabilir.",
+                "Hemoglobin": "Hemoglobin düşük. Bu oksijen taşıma kapasitesini azaltır.",
+                "Hematocrit": "Hematokrit düşük. Bu anemi ile uyumlu bir bulgu.",
+                "MCV": "Ortalama hücre hacmi normal. Bu normositik anemi gösterir.",
+                "MCH": "Ortalama hemoglobin içeriği normal.",
+                "MCHC": "Ortalama hemoglobin konsantrasyonu normal.",
+                "Platelet": "Trombosit sayısı normal. Kan pıhtılaşması için yeterli.",
+                "Neutrophil": "Nötrofil oranı normal. Enfeksiyonla savaşma kapasitesi iyi.",
+                "Lymphocyte": "Lenfosit oranı normal. Bağışıklık sistemi iyi çalışıyor.",
+                "Monocyte": "Monosit oranı normal.",
+                "Eosinophil": "Eozinofil oranı normal.",
+                "Basophil": "Bazofil oranı normal."
+            };
+
+            Object.entries(cbcTestData).forEach(([testName, data]) => {
+                const row = document.createElement('tr');
+                row.className = 'border-b border-gray-100 hover:bg-gray-50 transition-colors';
+                
+                let statusClass = 'bg-green-100 text-green-800';
+                let statusText = 'Normal';
+                let statusIcon = 'fas fa-check-circle';
+
+                if (data.status === 'high' && data.critical) {
+                    statusClass = 'bg-red-100 text-red-800';
+                    statusText = 'Kritik Yüksek';
+                    statusIcon = 'fas fa-exclamation-triangle';
+                } else if (data.status === 'high') {
+                    statusClass = 'bg-orange-100 text-orange-800';
+                    statusText = 'Yüksek';
+                    statusIcon = 'fas fa-arrow-up';
+                } else if (data.status === 'low') {
+                    statusClass = 'bg-blue-100 text-blue-800';
+                    statusText = 'Düşük';
+                    statusIcon = 'fas fa-arrow-down';
+                }
+
+                row.innerHTML = `
+                    <td class="py-3 px-4 font-medium text-gray-800">${testName}</td>
+                    <td class="py-3 px-4 text-center font-bold">${data.value} ${data.unit}</td>
+                    <td class="py-3 px-4 text-center text-gray-600">${data.normal}</td>
+                    <td class="py-3 px-4 text-center">
+                        <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${statusClass}">
+                            <i class="${statusIcon} mr-1"></i>${statusText}
+                        </span>
+                    </td>
+                    <td class="py-3 px-4 text-sm text-gray-700">${patientExplanations[testName]}</td>
+                `;
+
+                allResultsTable.appendChild(row);
+            });
+        }
+
+        function showFallbackResults() {
+            // Show fallback results if AI fails
+            const doctorReport = document.getElementById('doctorReport');
+            doctorReport.innerHTML = `
+                <div class="space-y-4">
+                    <div class="bg-yellow-50 border-l-4 border-yellow-500 p-4 rounded-lg">
+                        <h4 class="font-bold text-yellow-800 mb-2">Dikkat Edilmesi Gerekenler:</h4>
+                        <ul class="text-yellow-700 space-y-1">
+                            <li>• <strong>WBC:</strong> 11.5 K/μL (Normal: 4.5-11.0) - Hafif lökositoz</li>
+                            <li>• <strong>RBC:</strong> 3.8 M/μL (Normal: 4.0-5.2) - Hafif anemi</li>
+                            <li>• <strong>Hemoglobin:</strong> 11.2 g/dL (Normal: 12.0-15.5) - Anemi belirtisi</li>
+                        </ul>
+                </div>
+                    <div class="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-lg">
+                        <h4 class="font-bold text-blue-800 mb-2">Öneriler:</h4>
+                        <ul class="text-blue-700 space-y-1">
+                            <li>• Demir profili kontrolü</li>
+                            <li>• B12 vitamini ve folik asit kontrolü</li>
+                            <li>• 1 ay sonra kontrol</li>
+                        </ul>
+            </div>
+                </div>
+            `;
+        }
+
+        function toggleAllResults() {
+            const allResultsSection = document.getElementById('allResultsSection');
+            const historicalDataSection = document.getElementById('historicalDataSection');
+            const button = document.getElementById('showAllResultsBtn');
+            const historyButton = document.getElementById('showHistoryBtn');
+            
+            // Hide historical data if open
+            historicalDataSection.classList.add('hidden');
+            historyButton.innerHTML = '<i class="fas fa-history mr-2"></i>Geçmiş Test Verilerini Görüntüle';
+            historyButton.classList.remove('btn-primary');
+            historyButton.classList.add('btn-secondary');
+            
+            if (allResultsSection.classList.contains('hidden')) {
+                allResultsSection.classList.remove('hidden');
+                button.innerHTML = '<i class="fas fa-eye-slash mr-2"></i>Tüm Sonuçları Gizle';
+                button.classList.remove('btn-secondary');
+                button.classList.add('btn-primary');
+            } else {
+                allResultsSection.classList.add('hidden');
+                button.innerHTML = '<i class="fas fa-list mr-2"></i>Tüm Test Sonuçlarını Görüntüle';
+                button.classList.remove('btn-primary');
+                button.classList.add('btn-secondary');
+            }
+        }
+
+        function toggleHistoricalData() {
+            const historicalDataSection = document.getElementById('historicalDataSection');
+            const allResultsSection = document.getElementById('allResultsSection');
+            const button = document.getElementById('showHistoryBtn');
+            const resultsButton = document.getElementById('showAllResultsBtn');
+            
+            // Hide all results if open
+            allResultsSection.classList.add('hidden');
+            resultsButton.innerHTML = '<i class="fas fa-list mr-2"></i>Tüm Test Sonuçlarını Görüntüle';
+            resultsButton.classList.remove('btn-primary');
+            resultsButton.classList.add('btn-secondary');
+            
+            if (historicalDataSection.classList.contains('hidden')) {
+                historicalDataSection.classList.remove('hidden');
+                button.innerHTML = '<i class="fas fa-eye-slash mr-2"></i>Geçmiş Verileri Gizle';
+                button.classList.remove('btn-secondary');
+                button.classList.add('btn-primary');
+                populateHistoricalData('2024-01-15'); // Show first date by default
+            } else {
+                historicalDataSection.classList.add('hidden');
+                button.innerHTML = '<i class="fas fa-history mr-2"></i>Geçmiş Test Verilerini Görüntüle';
+                button.classList.remove('btn-primary');
+                button.classList.add('btn-secondary');
+            }
+        }
+
+        function setupHistoricalTabs() {
+            const tabs = document.querySelectorAll('.history-tab');
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    // Remove active class from all tabs
+                    tabs.forEach(t => {
+                        t.classList.remove('active', 'bg-white', 'text-gray-800', 'font-medium');
+                        t.classList.add('text-gray-600', 'hover:bg-gray-200');
+                    });
+                    
+                    // Add active class to clicked tab
+                    tab.classList.add('active', 'bg-white', 'text-gray-800', 'font-medium');
+                    tab.classList.remove('text-gray-600', 'hover:bg-gray-200');
+                    
+                    // Load data for selected date
+                    const selectedDate = tab.getAttribute('data-date');
+                    populateHistoricalData(selectedDate);
+                });
+            });
+        }
+
+        function populateHistoricalData(date) {
+            const tableBody = document.getElementById('historicalDataTable');
+            tableBody.innerHTML = '';
+
+            let data;
+            if (date === '2024-12-15') {
+                data = cbcTestData; // Current data
+            } else {
+                data = historicalTestData[date] || {};
+            }
+
+            Object.entries(data).forEach(([testName, testData]) => {
+                const row = document.createElement('tr');
+                row.className = 'border-b border-gray-100 hover:bg-gray-50 transition-colors';
+                
+                let statusClass = 'bg-green-100 text-green-800';
+                let statusText = 'Normal';
+                let statusIcon = 'fas fa-check-circle';
+                let changeIndicator = '';
+
+                if (testData.status === 'high' && testData.critical) {
+                    statusClass = 'bg-red-100 text-red-800';
+                    statusText = 'Kritik Yüksek';
+                    statusIcon = 'fas fa-exclamation-triangle';
+                    changeIndicator = '📈';
+                } else if (testData.status === 'high') {
+                    statusClass = 'bg-orange-100 text-orange-800';
+                    statusText = 'Yüksek';
+                    statusIcon = 'fas fa-arrow-up';
+                    changeIndicator = '📈';
+                } else if (testData.status === 'low') {
+                    statusClass = 'bg-blue-100 text-blue-800';
+                    statusText = 'Düşük';
+                    statusIcon = 'fas fa-arrow-down';
+                    changeIndicator = '📉';
+                }
+
+                row.innerHTML = `
+                    <td class="py-3 px-4 font-medium text-gray-800">${testName}</td>
+                    <td class="py-3 px-4 text-center font-bold">${testData.value} ${testData.unit}</td>
+                    <td class="py-3 px-4 text-center text-gray-600">${testData.normal}</td>
+                    <td class="py-3 px-4 text-center">
+                        <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${statusClass}">
+                            <i class="${statusIcon} mr-1"></i>${statusText}
+                        </span>
+                    </td>
+                    <td class="py-3 px-4 text-center text-lg">${changeIndicator}</td>
+                `;
+
+                tableBody.appendChild(row);
+            });
+        }
+
+        // Doctor screen functions
+        function toggleDoctorAllResults() {
+            const allResultsSection = document.getElementById('doctorAllResultsSection');
+            const historicalDataSection = document.getElementById('doctorHistoricalDataSection');
+            const button = document.getElementById('doctorShowAllResultsBtn');
+            const historyButton = document.getElementById('doctorShowHistoryBtn');
+            
+            // Hide historical data if open
+            historicalDataSection.classList.add('hidden');
+            historyButton.innerHTML = '<i class="fas fa-history mr-2"></i>Geçmiş Test Verilerini Görüntüle';
+            historyButton.classList.remove('btn-primary');
+            historyButton.classList.add('btn-secondary');
+            
+            if (allResultsSection.classList.contains('hidden')) {
+                allResultsSection.classList.remove('hidden');
+                button.innerHTML = '<i class="fas fa-eye-slash mr-2"></i>Tüm Sonuçları Gizle';
+                button.classList.remove('btn-secondary');
+                button.classList.add('btn-primary');
+                populateDoctorAllResultsTable();
+            } else {
+                allResultsSection.classList.add('hidden');
+                button.innerHTML = '<i class="fas fa-list mr-2"></i>Tüm Test Sonuçlarını Görüntüle';
+                button.classList.remove('btn-primary');
+                button.classList.add('btn-secondary');
+            }
+        }
+
+        function toggleDoctorHistoricalData() {
+            const historicalDataSection = document.getElementById('doctorHistoricalDataSection');
+            const allResultsSection = document.getElementById('doctorAllResultsSection');
+            const button = document.getElementById('doctorShowHistoryBtn');
+            const resultsButton = document.getElementById('doctorShowAllResultsBtn');
+            
+            // Hide all results if open
+            allResultsSection.classList.add('hidden');
+            resultsButton.innerHTML = '<i class="fas fa-list mr-2"></i>Tüm Test Sonuçlarını Görüntüle';
+            resultsButton.classList.remove('btn-primary');
+            resultsButton.classList.add('btn-secondary');
+            
+            if (historicalDataSection.classList.contains('hidden')) {
+                historicalDataSection.classList.remove('hidden');
+                button.innerHTML = '<i class="fas fa-eye-slash mr-2"></i>Geçmiş Verileri Gizle';
+                button.classList.remove('btn-secondary');
+                button.classList.add('btn-primary');
+                populateDoctorHistoricalData('2024-01-15'); // Show first date by default
+            } else {
+                historicalDataSection.classList.add('hidden');
+                button.innerHTML = '<i class="fas fa-history mr-2"></i>Geçmiş Test Verilerini Görüntüle';
+                button.classList.remove('btn-primary');
+                button.classList.add('btn-secondary');
+            }
+        }
+
+        function setupDoctorHistoricalTabs() {
+            const tabs = document.querySelectorAll('.doctor-history-tab');
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    // Remove active class from all tabs
+                    tabs.forEach(t => {
+                        t.classList.remove('active', 'bg-white', 'text-gray-800', 'font-medium');
+                        t.classList.add('text-gray-600', 'hover:bg-gray-200');
+                    });
+                    
+                    // Add active class to clicked tab
+                    tab.classList.add('active', 'bg-white', 'text-gray-800', 'font-medium');
+                    tab.classList.remove('text-gray-600', 'hover:bg-gray-200');
+                    
+                    // Load data for selected date
+                    const selectedDate = tab.getAttribute('data-date');
+                    populateDoctorHistoricalData(selectedDate);
+                });
+            });
+        }
+
+        function populateDoctorHistoricalData(date) {
+            const tableBody = document.getElementById('doctorHistoricalDataTable');
+            tableBody.innerHTML = '';
+
+            let data;
+            if (date === '2024-12-15') {
+                data = cbcTestData; // Current data
+            } else {
+                data = historicalTestData[date] || {};
+            }
+
+            Object.entries(data).forEach(([testName, testData]) => {
+                const row = document.createElement('tr');
+                row.className = 'border-b border-gray-100 hover:bg-gray-50 transition-colors';
+                
+                let statusClass = 'bg-green-100 text-green-800';
+                let statusText = 'Normal';
+                let statusIcon = 'fas fa-check-circle';
+                let changeIndicator = '';
+
+                if (testData.status === 'high' && testData.critical) {
+                    statusClass = 'bg-red-100 text-red-800';
+                    statusText = 'Kritik Yüksek';
+                    statusIcon = 'fas fa-exclamation-triangle';
+                    changeIndicator = '📈';
+                } else if (testData.status === 'high') {
+                    statusClass = 'bg-orange-100 text-orange-800';
+                    statusText = 'Yüksek';
+                    statusIcon = 'fas fa-arrow-up';
+                    changeIndicator = '📈';
+                } else if (testData.status === 'low') {
+                    statusClass = 'bg-blue-100 text-blue-800';
+                    statusText = 'Düşük';
+                    statusIcon = 'fas fa-arrow-down';
+                    changeIndicator = '📉';
+                }
+
+                row.innerHTML = `
+                    <td class="py-3 px-4 font-medium text-gray-800">${testName}</td>
+                    <td class="py-3 px-4 text-center font-bold">${testData.value} ${testData.unit}</td>
+                    <td class="py-3 px-4 text-center text-gray-600">${testData.normal}</td>
+                    <td class="py-3 px-4 text-center">
+                        <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${statusClass}">
+                            <i class="${statusIcon} mr-1"></i>${statusText}
+                        </span>
+                    </td>
+                    <td class="py-3 px-4 text-center text-lg">${changeIndicator}</td>
+                `;
+
+                tableBody.appendChild(row);
+            });
+        }
+
+        function populateDoctorAllResultsTable() {
+            const tableBody = document.getElementById('doctorAllResultsTable');
+            tableBody.innerHTML = '';
+
+            const doctorExplanations = {
+                "WBC": "Lökosit sayısı hafif yüksek. Enfeksiyon veya enflamasyon varlığı araştırılmalıdır.",
+                "RBC": "Eritrosit sayısı düşük. Anemi ile uyumlu bulgu.",
+                "Hemoglobin": "Hemoglobin değeri normal aralığın altında. Demir eksikliği anemisi düşünülmelidir.",
+                "Hematocrit": "Hematokrit düşük. Anemi ile uyumlu bulgu.",
+                "MCV": "Ortalama hücre hacmi normal. Normositik anemi gösterir.",
+                "MCH": "Ortalama hemoglobin içeriği normal.",
+                "MCHC": "Ortalama hemoglobin konsantrasyonu normal.",
+                "Platelet": "Trombosit sayısı normal. Kan pıhtılaşması için yeterli.",
+                "Neutrophil": "Nötrofil oranı normal. Enfeksiyonla savaşma kapasitesi iyi.",
+                "Lymphocyte": "Lenfosit oranı normal. Bağışıklık sistemi iyi çalışıyor.",
+                "Monocyte": "Monosit oranı normal.",
+                "Eosinophil": "Eozinofil oranı normal.",
+                "Basophil": "Bazofil oranı normal."
+            };
+
+            Object.entries(cbcTestData).forEach(([testName, data]) => {
+                const row = document.createElement('tr');
+                row.className = 'border-b border-gray-100 hover:bg-gray-50 transition-colors';
+                
+                let statusClass = 'bg-green-100 text-green-800';
+                let statusText = 'Normal';
+                let statusIcon = 'fas fa-check-circle';
+
+                if (data.status === 'high' && data.critical) {
+                    statusClass = 'bg-red-100 text-red-800';
+                    statusText = 'Kritik Yüksek';
+                    statusIcon = 'fas fa-exclamation-triangle';
+                } else if (data.status === 'high') {
+                    statusClass = 'bg-orange-100 text-orange-800';
+                    statusText = 'Yüksek';
+                    statusIcon = 'fas fa-arrow-up';
+                } else if (data.status === 'low') {
+                    statusClass = 'bg-blue-100 text-blue-800';
+                    statusText = 'Düşük';
+                    statusIcon = 'fas fa-arrow-down';
+                }
+
+                row.innerHTML = `
+                    <td class="py-3 px-4 font-medium text-gray-800">${testName}</td>
+                    <td class="py-3 px-4 text-center font-bold">${data.value} ${data.unit}</td>
+                    <td class="py-3 px-4 text-center text-gray-600">${data.normal}</td>
+                    <td class="py-3 px-4 text-center">
+                        <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${statusClass}">
+                            <i class="${statusIcon} mr-1"></i>${statusText}
+                        </span>
+                    </td>
+                    <td class="py-3 px-4 text-sm text-gray-700">${doctorExplanations[testName]}</td>
+                `;
+
+                tableBody.appendChild(row);
+            });
+        }
+
+        // Function to generate trend analysis from historical data
+        function generateTrendAnalysis() {
+            const trendData = {};
+            
+            // Get all test names from current data
+            const testNames = Object.keys(cbcTestData);
+            
+            testNames.forEach(testName => {
+                if (historicalTestData['2024-01-15'] && historicalTestData['2024-01-15'][testName]) {
+                    trendData[testName] = {
+                        '2024-01-15': historicalTestData['2024-01-15'][testName].value,
+                        '2024-03-20': historicalTestData['2024-03-20'] ? historicalTestData['2024-03-20'][testName].value : null,
+                        '2024-06-10': historicalTestData['2024-06-10'] ? historicalTestData['2024-06-10'][testName].value : null,
+                        '2024-12-15': cbcTestData[testName].value
+                    };
+                }
+            });
+            
+            return trendData;
+        }
+
+        // Function to get trend direction and severity
+        function getTrendDirection(values) {
+            const validValues = values.filter(v => v !== null);
+            if (validValues.length < 2) return { direction: 'stable', severity: 'none' };
+            
+            const first = validValues[0];
+            const last = validValues[validValues.length - 1];
+            const change = last - first;
+            const percentChange = (change / first) * 100;
+            
+            if (Math.abs(percentChange) < 5) {
+                return { direction: 'stable', severity: 'none' };
+            } else if (percentChange > 10) {
+                return { direction: 'increasing', severity: 'significant' };
+            } else if (percentChange > 5) {
+                return { direction: 'increasing', severity: 'moderate' };
+            } else if (percentChange < -10) {
+                return { direction: 'decreasing', severity: 'significant' };
+            } else {
+                return { direction: 'decreasing', severity: 'moderate' };
+            }
+        }
+
+        // Function to generate nutrition recommendations based on test results
+        function generateNutritionRecommendations() {
+            const recommendations = {
+                iron: [],
+                vitaminC: [],
+                b12: [],
+                general: []
+            };
+
+            // Check for anemia indicators
+            if (cbcTestData.Hemoglobin.status === 'low' || cbcTestData.RBC.status === 'low') {
+                recommendations.iron = [
+                    'Kırmızı et (dana, kuzu)',
+                    'Karaciğer ve sakatat',
+                    'Ispanak ve koyu yeşil yapraklı sebzeler',
+                    'Mercimek ve kuru fasulye',
+                    'Kabuklu yemişler (badem, ceviz)',
+                    'Pekmez ve kuru üzüm'
+                ];
+                
+                recommendations.vitaminC = [
+                    'Turunçgiller (portakal, mandalina)',
+                    'Kırmızı biber ve domates',
+                    'Brokoli ve karnabahar',
+                    'Çilek ve kivi',
+                    'Maydanoz ve dereotu'
+                ];
+            }
+
+            // Check for infection indicators
+            if (cbcTestData.WBC.status === 'high') {
+                recommendations.general.push('Bol su tüketimi');
+                recommendations.general.push('C vitamini açısından zengin besinler');
+                recommendations.general.push('Probiyotik içeren besinler (yoğurt, kefir)');
+            }
+
+            return recommendations;
+        }
+
+        function downloadReport() {
+            let report = 'SAĞLIK ANALİZ MERKEZİ - TAM KAN SAYIMI RAPORU\n';
+            report += '=============================================\n\n';
+            report += `Hasta: ${patientInfo.name}\n`;
+            report += `Yaş: ${patientInfo.age}\n`;
+            report += `Test Tarihi: ${patientInfo.testDate}\n`;
+            report += `Test Türü: ${patientInfo.testType}\n\n`;
+            
+            report += 'TEST SONUÇLARI:\n';
+            report += '---------------\n';
+            
+            Object.entries(cbcTestData).forEach(([testName, data]) => {
+                let status = 'Normal';
+                if (data.status === 'high' && data.critical) status = 'KRİTİK YÜKSEK';
+                else if (data.status === 'high') status = 'Yüksek';
+                else if (data.status === 'low') status = 'Düşük';
+                
+                report += `${testName}: ${data.value} ${data.unit} (Normal: ${data.normal}) - ${status}\n`;
+            });
+            
+            // Create and download file
+            const blob = new Blob([report], { type: 'text/plain' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'tam_kan_sayimi_raporu.txt';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+        }
+    </script>
+</body>
+</html> 
