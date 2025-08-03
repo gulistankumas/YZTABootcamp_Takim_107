@@ -202,3 +202,61 @@ Sprint Review toplantısında, planlanan tüm işlerin zamanında tamamlandığ�
 
 Sprint sonunda ekip içi iş birliği yüksek bulunmuş, özellikle RAG veri seti hazırlanırken yaşanan zaman yönetimi sorunu ekip içi destekle çözülmüştür. Kod paylaşım süreçlerinin biraz daha sistematik hale getirilmesi ve test senaryolarının yazımına daha erken başlanması gerektiği not edilmiştir. Gelecek sprintte entegrasyon odaklı ilerlenmesi ve UI/UX testlerinin devreye alınması planlanmıştır.
 
+# SPRINT 3
+## Sprint Notları
+Sprint 3 sürecinde proje tamamlanma aşamasına gelmiş ve ürünün tüm temel işlevleri başarıyla entegre edilmiştir. Bu sprintte sistemin tam fonksiyonlu hale getirilmesine, hasta ve doktor arayüzlerinin sonlandırılmasına, yapay zekâ çıktılarının iyileştirilmesine ve demo hazırlıklarına odaklanılmıştır. Kullanıcı arayüzü, veri analizi ve LLM yorumları entegre bir yapı hâline getirilmiş; sistem gerçek senaryolarla test edilerek son düzenlemeler yapılmıştır.
+
+## Sprint İçinde Tamamlanması Tahmin Edilen Puan
+Sprint 3 kapsamında toplamda 100 puanlık iş planlanmış; bu puan, frontend bitirme, yapay zeka çıktılarının kullanıcıya özelleştirilmesi, geçmiş veri analizi ekranlarının tamamlanması ve demo içeriğinin hazırlanması gibi görevleri kapsamıştır. Tüm işler zamanında tamamlanmıştır.
+
+
+## Puan Tamamlama Mantığı
+Sprint 3 sonunda, sistemin hem teknik hem kullanıcı tarafındaki tüm bileşenleri tamamlanarak planlanan 100 puanlık hedef başarıyla gerçekleştirilmiştir. Proje, kullanıma hazır ve test edilmiş bir MVP düzeyine ulaşmıştır.
+
+
+## Daily Scrum
+Sprint boyunca günlük iletişim WhatsApp üzerinden sürdürülmüş, her ekip üyesi kendi görev durumu hakkında bilgi vermiştir. Demo hazırlığı sürecinde yoğun iş birliği yapılmış, son kullanıcı deneyimi ve yapay zekâ çıktıları birlikte test edilerek gerekli düzeltmeler yapılmıştır.
+
+
+<details>
+  <summary>Ekran Görüntüleri</summary>
+
+
+
+<img width="626" height="679" alt="image" src="https://github.com/user-attachments/assets/7a789414-96d1-4cb5-bfcd-b82e5df6854e" />
+</details>
+
+
+## Sprint Board Screenshotları
+
+Sprint 3’te görevler Trello üzerinden detaylı şekilde yönetilmiş, her görevin tamamlanma süreci takip edilmiştir. UI/UX düzenlemeleri, öneri sistemlerinin çıktıları ve geçmiş veri analitiği modülü ayrı kartlar olarak işlenmiştir.
+
+<details>
+  <summary>Ekran Görüntüleri</summary>
+
+
+<img width="1283" height="1001" alt="image" src="https://github.com/user-attachments/assets/6c93ebb6-128b-4abe-9627-d1c4cac9204c" />
+</details>
+
+
+
+## Ürün Durumu: Ekran Görüntüleri
+Sprint sonunda ürün aşağıdaki özelliklerle birlikte tamamlanmıştır:
+
+Doktor arayüzü: Tahlil analiz, önem sırası, poliklinik önerisi, geçmiş veriler
+
+Hasta arayüzü: Anlaşılır yorumlama, beslenme önerileri, geçmiş analiz
+
+LLM destekli açıklamalar ve öneriler
+
+Gerçek zamanlı yapay zeka analizi
+
+Demo sunumu için ekran akışı ve senaryo tamamlanmıştır
+
+<details> <summary>Ekran Görüntüleri</summary> <img src="https://github.com/user-attachments/assets/7b0df87d-8aa4-46d2-8c3c-de0ad5e27292" alt="Ürün Durumu: Ekran Görüntüleri" width="600"/> </details>
+
+## Sprint Review
+Sprint Review toplantısında, tüm ürün bileşenlerinin başarılı şekilde tamamlandığı ve ürünün demo sunumuna hazır hâle geldiği görülmüştür. Sistem, gerçek senaryolarla test edilerek eksiksiz çalıştığı doğrulanmıştır. Özellikle doktor ve hasta ekranlarının ayrı ayrı test edilmesi, kullanıcı deneyimini güçlendirmiştir.
+
+## Sprint Retrospective
+Sprint sonunda ekip, ürünün tamamlanmasından dolayı memnuniyetini dile getirmiştir. Kod bütünlüğü, iş bölümü ve test süreçlerinde önceki sprintlere göre belirgin bir iyileşme sağlandığı belirtilmiştir. Son sprintte zaman yönetimi iyi yapılmış, kullanıcı geri bildirimlerine göre hızlı revizyonlar yapılabilmiştir. Demo süreci sonrası ürünün açık kaynak hâline getirilmesi veya pilot uygulama ortamlarında test edilmesi önerilmiştir.
