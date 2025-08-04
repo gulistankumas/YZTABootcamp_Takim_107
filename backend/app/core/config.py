@@ -45,7 +45,9 @@ class Settings:
     
     def __init__(self):
         # Load from environment variables
-        self.GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "AIzaSyBM5i2-Tg_jLJpBlq4Mrcm4uGpfE1VQJbg")
+        self.GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
+        if not self.GEMINI_API_KEY:
+            raise ValueError("GEMINI_API_KEY environment variable is required")
         self.DATABASE_URL = os.getenv("DATABASE_URL", self.DATABASE_URL)
         self.SECRET_KEY = os.getenv("SECRET_KEY", self.SECRET_KEY)
         self.MEDICAL_DATA_ENCRYPTION_KEY = os.getenv("MEDICAL_DATA_ENCRYPTION_KEY", self.MEDICAL_DATA_ENCRYPTION_KEY)
